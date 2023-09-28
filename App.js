@@ -1,12 +1,22 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const App = () => {
+// screens
+import LoginScreen from './Source/Screens/LoginScreen';
+import RegisterScreen from './Source/Screens/RegisterScreen';
+
+
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
     return (
-        <View>
-            <Text>App</Text>
-        </View>
-    )
+        <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ animation: 'slide_from_right' }} />
+                <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ animation: 'slide_from_right' }} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
-
-export default App
