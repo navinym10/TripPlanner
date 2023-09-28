@@ -52,7 +52,6 @@ const RegisterScreen = ({ navigation }) => {
                     mail: mailId,
                     password: password,
                 }
-                console.log(typeof (mailId));
                 await AsyncStorage.setItem(mailId, JSON.stringify(userData))
 
                 // const getData = await AsyncStorage.getItem("key1")
