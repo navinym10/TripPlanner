@@ -1,5 +1,8 @@
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
+
+// firebase auth
+import auth from '@react-native-firebase/auth';
 
 // images
 import { hide, lock, mail, travel, view } from '../Images/Images'
@@ -8,14 +11,40 @@ const LoginScreen = ({ navigation }) => {
 
     const [showPassword, setShowPassword] = useState(false)
     const [secureText, setSecureText] = useState(true)
+    const [mailId, setMailId] = useState('')
+    const [password, setPassword] = useState('')
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword)
         setSecureText(!secureText)
     }
 
+    const handleMailId = (text) => { setMailId(text) }
+    const handlePassword = (text) => { setPassword(text) }
+
     const handleRegister = () => {
         navigation.navigate('RegisterScreen')
+    }
+
+    const handleLogin = async () => {
+
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/
+
+        if (reg.test(mailId) && password != '') {
+
+            try {
+                await auth().signInWithEmailAndPassword(mailId, password)
+                // console.log(typeof (mailId))
+                console.log("Success")
+                navigation.navigate('HomeScreen', { asyncKey: mailId })
+            } catch {
+                ToastAndroid.show("Invalid Credentials!", ToastAndroid.SHORT)
+            }
+
+        } else {
+            ToastAndroid.show("Invalid Credentials!", ToastAndroid.SHORT)
+        }
+        // navigation.navigate('HomeScreen')
     }
 
     return (
@@ -34,6 +63,8 @@ const LoginScreen = ({ navigation }) => {
                     <View style={Styles.textInputcontianer}>
                         <Image style={Styles.inputImage} source={mail} />
                         <TextInput style={Styles.placeholder}
+                            value={mailId}
+                            onChangeText={handleMailId}
                             placeholder='Mail ID'
                             placeholderTextColor={'grey'} />
                     </View>
@@ -42,6 +73,8 @@ const LoginScreen = ({ navigation }) => {
                     <View style={Styles.textInputcontianer}>
                         <Image style={Styles.inputImage} source={lock} />
                         <TextInput style={Styles.placeholder}
+                            value={password}
+                            onChangeText={handlePassword}
                             placeholder='Password'
                             placeholderTextColor={'grey'}
                             secureTextEntry={secureText} />
@@ -55,6 +88,7 @@ const LoginScreen = ({ navigation }) => {
 
                     {/* login button */}
                     <TouchableOpacity
+                        onPress={handleLogin}
                         activeOpacity={0.5}
                         style={Styles.button}>
                         <Text style={Styles.buttonText}>Login</Text>
