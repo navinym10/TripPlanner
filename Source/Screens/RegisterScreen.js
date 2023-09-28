@@ -47,6 +47,8 @@ const RegisterScreen = ({ navigation }) => {
 
                     {/* input fields */}
                     <View style={{ alignItems: "center", marginTop: 25 }}>
+
+                        {/* enter username */}
                         <View style={Styles.textInputcontianer}>
                             <Image style={Styles.inputImage} source={user} />
                             <TextInput style={Styles.placeholder}
@@ -54,6 +56,7 @@ const RegisterScreen = ({ navigation }) => {
                                 placeholderTextColor={'grey'} />
                         </View>
 
+                        {/* enter mail */}
                         <View style={Styles.textInputcontianer}>
                             <Image style={Styles.inputImage} source={mail} />
                             <TextInput style={Styles.placeholder}
@@ -61,6 +64,7 @@ const RegisterScreen = ({ navigation }) => {
                                 placeholderTextColor={'grey'} />
                         </View>
 
+                        {/* enter password */}
                         <View style={Styles.textInputcontianer}>
                             <Image style={Styles.inputImage} source={lock} />
                             <TextInput style={Styles.placeholder}
@@ -75,6 +79,7 @@ const RegisterScreen = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
 
+                        {/* re-enter password */}
                         <View style={Styles.textInputcontianer}>
                             <Image style={Styles.inputImage} source={lock} />
                             <TextInput style={Styles.placeholder}
@@ -89,6 +94,7 @@ const RegisterScreen = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
 
+                        {/* register button */}
                         <TouchableOpacity
                             activeOpacity={0.5}
                             style={Styles.button}>
