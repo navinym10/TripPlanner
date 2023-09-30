@@ -12,6 +12,10 @@ import homeImage from './homeImage.jpg'
 import addTrip from './addTrip.png'
 import destination from './destination.png'
 import day from './day.png'
+import route from './route.png'
+import suggestion from './suggestion.png'
+import dropDown from './dropDown.png'
+import itinerary from './itinerary.png'
 
 export {
     travel,
@@ -27,5 +31,9 @@ export {
     homeImage,
     addTrip,
     destination,
-    day
+    day,
+    route,
+    suggestion,
+    dropDown,
+    itinerary,
 }

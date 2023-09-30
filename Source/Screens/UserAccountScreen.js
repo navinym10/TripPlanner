@@ -6,7 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // colors
 import { Colors } from '../Colors'
-import BottomTab from '../Components/BottomTab'
 
 const UserAccountScreen = ({ route }) => {
 
@@ -29,7 +28,6 @@ const UserAccountScreen = ({ route }) => {
 
     return (
         <View style={Styles.container}>
-            <BottomTab />
             {/* {userData ?
                 <Text style={{ color: 'white' }}>{userData.username}</Text> :
                 <ActivityIndicator size="small" color="#0000ff" />

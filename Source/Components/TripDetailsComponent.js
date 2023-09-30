@@ -1,11 +1,21 @@
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, ScrollView, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
+// navigation
+import { useNavigation } from '@react-navigation/core'
+
 // images
-import { destination, homeImage } from '../Images/Images'
+import { destination, homeImage, route, suggestion } from '../Images/Images'
+
+// async storage
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+// colors
+import { Colors } from '../Colors'
+
 const TripDetailsComponent = () => {
+
+    const navigation = useNavigation()
 
     const [tripData, setTripData] = useState('')
 
@@ -45,6 +55,24 @@ const TripDetailsComponent = () => {
                     </View>
                 </ImageBackground>
 
+                <Text style={[Styles.tripHeader, { fontSize: 23, marginLeft: 30 }]}>Itinerary</Text>
+
+                <View style={Styles.plansContainer}>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('PlansScreen')}
+                        style={Styles.itenary}
+                        activeOpacity={0.5}>
+                        <Image style={Styles.itenaryImage} source={route} />
+                        <Text style={[Styles.tripHeader, { fontSize: 16, fontWeight: '500' }]}>Plans</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={Styles.itenary}
+                        activeOpacity={0.5}>
+                        <Image style={Styles.itenaryImage} source={suggestion} />
+                        <Text style={[Styles.tripHeader, { fontSize: 16, fontWeight: '500' }]}>Suggestions</Text>
+                    </TouchableOpacity>
+                </View>
+
             </ScrollView>
         </View >
     )
@@ -61,4 +89,7 @@ const Styles = StyleSheet.create({
     destinationContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 20 },
     datesContainer: { borderWidth: 1, borderRadius: 5, alignItems: 'center', justifyContent: 'center', padding: 10, marginTop: 20, backgroundColor: 'rgba(255, 255, 255, 0.3)' },
     destinationImage: { height: 30, width: 30 },
+    plansContainer: { flexDirection: 'row', alignItems: "center", justifyContent: 'space-between', margin: 30 },
+    itenary: { height: 150, width: 150, alignItems: 'center', justifyContent: 'center', borderRadius: 10, borderWidth: 3, borderColor: 'grey' },
+    itenaryImage: { height: 75, width: 75 },
 })

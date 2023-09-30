@@ -10,9 +10,6 @@ import { Colors } from '../Colors'
 // images
 import { addTrip, home } from '../Images/Images'
 
-// components
-import BottomTab from '../Components/BottomTab'
-
 const MyTripsScreen = ({ route, navigation }) => {
 
     const [userData, setUserData] = useState(null)
@@ -21,7 +18,6 @@ const MyTripsScreen = ({ route, navigation }) => {
 
     return (
         <View style={Styles.container}>
-            <BottomTab />
             <View style={Styles.headerContainer}>
                 <Text style={Styles.headerText}>My Trips</Text>
                 <TouchableOpacity
