@@ -4,8 +4,14 @@ import React, { useState } from 'react'
 // firebase auth
 import auth from '@react-native-firebase/auth';
 
+// async storage
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 // images
 import { hide, lock, mail, travel, view } from '../Images/Images'
+
+// colors
+import { Colors } from '../Colors';
 
 const LoginScreen = ({ navigation }) => {
 
@@ -28,23 +34,24 @@ const LoginScreen = ({ navigation }) => {
 
     const handleLogin = async () => {
 
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/
+        // let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/
 
-        if (reg.test(mailId) && password != '') {
+        // if (reg.test(mailId) && password != '') {
 
-            try {
-                await auth().signInWithEmailAndPassword(mailId, password)
-                // console.log(typeof (mailId))
-                console.log("Success")
-                navigation.navigate('HomeScreen', { asyncKey: mailId })
-            } catch {
-                ToastAndroid.show("Invalid Credentials!", ToastAndroid.SHORT)
-            }
+        //     try {
+        //         await auth().signInWithEmailAndPassword(mailId, password)
+        //         // console.log(typeof (mailId))
+        //         console.log("Success")
+        //         navigation.navigate('HomeScreen', { asyncKey: mailId })
+        //         await AsyncStorage.setItem('isLoggedIn', 'true')
+        //     } catch {
+        //         ToastAndroid.show("Invalid Credentials!", ToastAndroid.SHORT)
+        //     }
 
-        } else {
-            ToastAndroid.show("Invalid Credentials!", ToastAndroid.SHORT)
-        }
-        // navigation.navigate('HomeScreen')
+        // } else {
+        //     ToastAndroid.show("Invalid Credentials!", ToastAndroid.SHORT)
+        // }
+        navigation.navigate('HomeScreen')
     }
 
     return (
@@ -115,7 +122,7 @@ export default LoginScreen
 
 // styles
 const Styles = StyleSheet.create({
-    container: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'black' },
+    container: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.primaryColor },
     logo: { height: 256, width: 256 },
     name: { color: 'white', fontSize: 30, fontWeight: 'bold', letterSpacing: 2, marginTop: 20 },
     slogan: { color: 'white', fontSize: 16, fontWeight: '500', letterSpacing: 2, margin: 10, marginTop: 20, textAlign: 'center', marginBottom: 20 },

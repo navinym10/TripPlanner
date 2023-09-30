@@ -10,6 +10,9 @@ import auth from '@react-native-firebase/auth';
 // images
 import { hide, leftArrowLight, lock, mail, user, view } from '../Images/Images'
 
+// colors
+import { Colors } from '../Colors';
+
 const RegisterScreen = ({ navigation }) => {
 
     const [showPassword, setShowPassword] = useState(false)
@@ -56,7 +59,6 @@ const RegisterScreen = ({ navigation }) => {
 
                 // const getData = await AsyncStorage.getItem("key1")
                 // console.log(JSON.parse(getData));
-
                 try {
                     await auth().createUserWithEmailAndPassword(mailId, password)
                     ToastAndroid.show('Account Created!', ToastAndroid.SHORT)
@@ -162,7 +164,7 @@ export default RegisterScreen
 
 // styles
 const Styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: 'black', },
+    container: { flex: 1, backgroundColor: Colors.primaryColor, },
     headerContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 25, justifyContent: 'space-around' },
     backButtonContainer: { height: 30, width: 30, alignItems: 'center', justifyContent: 'center', position: "absolute", left: 0, marginStart: 25 },
     backButton: { height: 20, width: 20 },
@@ -172,6 +174,6 @@ const Styles = StyleSheet.create({
     securePassword: { height: 35, width: 35, alignItems: 'center', justifyContent: 'center', marginStart: 5 },
     inputImage: { height: 35, width: 35, marginStart: 10 },
     passwordImage: { height: 20, width: 20, },
-    button: { height: 55, width: '50%', backgroundColor: '#1573FE', borderRadius: 5, marginTop: 10, alignItems: 'center', justifyContent: 'center' },
+    button: { height: 55, width: '50%', backgroundColor: Colors.buttonColor, borderRadius: 5, marginTop: 10, alignItems: 'center', justifyContent: 'center' },
     buttonText: { color: 'white', fontSize: 15, fontWeight: '500', letterSpacing: 1, textTransform: 'uppercase' },
 })
