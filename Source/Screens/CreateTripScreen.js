@@ -9,6 +9,8 @@ import { day, destination, leftArrowLight, trip } from '../Images/Images'
 
 // date picker
 import DatePicker from 'react-native-date-picker'
+
+// async storage
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const CreateTripScreen = ({ navigation }) => {
@@ -60,6 +62,9 @@ const CreateTripScreen = ({ navigation }) => {
 
         if (tripName != '' && place != '') {
 
+            const trips = await AsyncStorage.getItem('tripDetails')
+            let existingTrips = trips ? JSON.parse(trips) : []
+
             let tripDetails = {
                 tripName: tripName,
                 destination: place,
@@ -67,11 +72,14 @@ const CreateTripScreen = ({ navigation }) => {
                 endDate: dateFormatter(endDate),
             }
 
-            await AsyncStorage.setItem('tripAdded', 'true')
-            await AsyncStorage.setItem('tripDetails', JSON.stringify(tripDetails))
+            existingTrips.push(tripDetails)
+            console.log(existingTrips)
 
-            // let getData = await AsyncStorage.getItem('tripDetails')
-            // console.log(JSON.parse(getData))
+            // let tripDetails = JSON.parse(await AsyncStorage.getItem('tripDetails'))
+            // console.log(tripDetails[0].destination);
+
+            await AsyncStorage.setItem('tripAdded', 'true')
+            await AsyncStorage.setItem('tripDetails', JSON.stringify(existingTrips))
 
             navigation.push('HomeScreen')
 

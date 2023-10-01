@@ -1,5 +1,5 @@
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard, ToastAndroid } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard, ToastAndroid, BackHandler, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 
 // firebase auth
 import auth from '@react-native-firebase/auth';
@@ -25,6 +25,25 @@ const LoginScreen = ({ navigation }) => {
         setSecureText(!secureText)
     }
 
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert('Hold on!', 'Are you sure you want to exit the App?', [
+                {
+                    text: 'Cancel',
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+                { text: 'YES', onPress: () => BackHandler.exitApp() },
+            ]);
+            return true;
+        };
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+        return () => backHandler.remove();
+    }, [])
+
     const handleMailId = (text) => { setMailId(text) }
     const handlePassword = (text) => { setPassword(text) }
 
@@ -34,24 +53,21 @@ const LoginScreen = ({ navigation }) => {
 
     const handleLogin = async () => {
 
-        // let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/
 
-        // if (reg.test(mailId) && password != '') {
+        if (reg.test(mailId) && password != '') {
 
-        //     try {
-        //         await auth().signInWithEmailAndPassword(mailId, password)
-        //         // console.log(typeof (mailId))
-        //         console.log("Success")
-        //         navigation.navigate('HomeScreen', { asyncKey: mailId })
-        //         await AsyncStorage.setItem('isLoggedIn', 'true')
-        //     } catch {
-        //         ToastAndroid.show("Invalid Credentials!", ToastAndroid.SHORT)
-        //     }
-
-        // } else {
-        //     ToastAndroid.show("Invalid Credentials!", ToastAndroid.SHORT)
-        // }
-        navigation.navigate('HomeScreen')
+            try {
+                await auth().signInWithEmailAndPassword(mailId, password)
+                console.log("Success")
+                navigation.navigate('HomeScreen', { asyncKey: mailId })
+                await AsyncStorage.setItem('isLoggedIn', 'true')
+            } catch {
+                ToastAndroid.show("Invalid Credentials!", ToastAndroid.SHORT)
+            }
+        } else {
+            ToastAndroid.show("Invalid Credentials!", ToastAndroid.SHORT)
+        }
     }
 
     return (

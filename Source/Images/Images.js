@@ -16,6 +16,16 @@ import route from './route.png'
 import suggestion from './suggestion.png'
 import dropDown from './dropDown.png'
 import itinerary from './itinerary.png'
+import description from './description.png'
+import cancel from './cancel.png'
+import edit from './edit.png'
+import complete from './complete.png'
+import profileAvatar from './profileAvatar.png'
+import arrowRight from './arrowRight.png'
+import downloadIcon from './downloadIcon.png'
+import aboutIcon from './aboutIcon.png'
+import logoutIcon from './logoutIcon.png'
+import logout from './logout.png'
 
 export {
     travel,
@@ -36,4 +46,14 @@ export {
     suggestion,
     dropDown,
     itinerary,
+    description,
+    cancel,
+    edit,
+    complete,
+    profileAvatar,
+    arrowRight,
+    downloadIcon,
+    aboutIcon,
+    logoutIcon,
+    logout,
 }

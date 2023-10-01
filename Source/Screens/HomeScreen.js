@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, StyleSheet, ImageBackground, TouchableOpacity, Image, ScrollView } from 'react-native'
+import { View, Text, ActivityIndicator, StyleSheet, ImageBackground, TouchableOpacity, Image, BackHandler, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 // async storage
@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 // colors
 import { Colors } from '../Colors'
 import BottomTab from '../Components/BottomTab'
-import { account, homeImage, trip } from '../Images/Images'
+import { account, homeImage, logout, trip } from '../Images/Images'
 import TripDetailsComponent from '../Components/TripDetailsComponent'
 
 const HomeScreen = ({ route, navigation }) => {
@@ -17,19 +17,6 @@ const HomeScreen = ({ route, navigation }) => {
 
     useEffect(() => {
 
-        // const loadUserData = async () => {
-        //     try {
-        //         const storedDataJSON = await AsyncStorage.getItem(route.params.asyncKey);
-        //         if (storedDataJSON) {
-        //             const storedData = JSON.parse(storedDataJSON);
-        //             setUserData(storedData);
-        //         }
-        //     } catch (error) {
-        //         console.error('Error loading user data:', error);
-        //     }
-        // };
-        // loadUserData();
-
         const tripData = async () => {
             const getTripData = await AsyncStorage.getItem('tripAdded')
             const data = JSON.parse(getTripData)
@@ -37,30 +24,51 @@ const HomeScreen = ({ route, navigation }) => {
             setTripAdded(data)
         }
         tripData()
+
+        const backAction = () => {
+            Alert.alert('Hold on!', 'Are you sure you want to exit the App?', [
+                {
+                    text: 'Cancel',
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+                { text: 'YES', onPress: () => BackHandler.exitApp() },
+            ]);
+            return true;
+        };
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+        return () => backHandler.remove();
+
     }, [])
 
     const handleCreateTrip = () => { navigation.navigate('CreateTripScreen') }
 
+    const handleLogout = () => {
+        Alert.alert('Hold on!', 'Are you sure you want to logout?', [
+            {
+                text: 'Cancel',
+                onPress: () => null,
+                style: 'cancel',
+            },
+            { text: 'YES', onPress: () => navigation.push('LoginScreen') },
+        ]);
+        return true;
+    }
+
     return (
         <View style={Styles.container}>
 
-            {/* bottom tab */}
-            {/* <BottomTab /> */}
-
             {/* header */}
             <View style={Styles.headerContainer}>
-                <TouchableOpacity
-                    activeOpacity={0.5}
-                    onPress={() => navigation.navigate('MyTripsScreen')}
-                    style={Styles.imageContainer}>
-                    <Image style={Styles.image} source={trip} />
-                </TouchableOpacity>
                 <Text style={Styles.header}>Trip Planner</Text>
                 <TouchableOpacity
                     activeOpacity={0.5}
-                    onPress={() => navigation.navigate('UserAccountScreen')}
+                    onPress={handleLogout}
                     style={Styles.imageContainer}>
-                    <Image style={Styles.image} source={account} />
+                    <Image style={Styles.image} source={logout} />
                 </TouchableOpacity>
             </View>
 
@@ -95,7 +103,7 @@ export default HomeScreen
 const Styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: Colors.primaryColor },
     headerContainer: { backgroundColor: Colors.bottomTabColor, flexDirection: 'row', alignItems: "center", justifyContent: 'space-between', height: 60 },
-    header: { textAlign: 'center', fontSize: 25, fontWeight: 'bold', color: "white", letterSpacing: 1, },
+    header: { textAlign: 'center', fontSize: 25, fontWeight: 'bold', color: "white", letterSpacing: 1, marginStart: 20 },
     imagesBackground: { height: 512, width: '100%', alignSelf: 'center', marginTop: 20, justifyContent: 'center', alignItems: 'center' },
     createContainer: { height: 40, width: '50%', borderWidth: 2, borderColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 5 },
     createText: { color: 'white', fontWeight: 'bold', letterSpacing: 1, fontSize: 15 },

@@ -23,7 +23,7 @@ const TripDetailsComponent = () => {
         const getData = async () => {
             const userData = await AsyncStorage.getItem('tripDetails')
             const data = JSON.parse(userData)
-            setTripData(data)
+            setTripData(data[0])
         }
         getData()
     })
